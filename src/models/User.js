@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const { Schema } = mongoose;
+const { Schema, model, models } = mongoose;
 
 const UserSchema = new Schema(
   {
@@ -58,5 +58,5 @@ UserSchema.pre("save", async function (next) {
   }
 });
 
-const UserModel = mongoose.model("users", UserSchema);
-module.exports = UserModel;
+const UserModel = models.users || model("users", UserSchema);
+export default UserModel;

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
+const { Schema, model, models } = mongoose;
 
 const TaskSchema = new Schema(
   {
@@ -13,4 +13,5 @@ const TaskSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("tasks", TaskSchema);
+const TaskModel = models.tasks || model("tasks", TaskSchema);
+export default TaskModel;
