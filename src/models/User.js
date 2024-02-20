@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import config from "@/config/config";
+import jwt from "jsonwebtoken";
 
 const { Schema, model, models } = mongoose;
 
@@ -16,9 +18,9 @@ const UserSchema = new Schema(
 );
 
 //method
-UserSchema.methods.genrateJwtToken = function () {
+UserSchema.methods.generateJwtToken = function () {
   try {
-    return jwt.sign({ user: this._id.toString() }, process.env.SECRET_KEY);
+    return jwt.sign({ user: this._id.toString() }, config.secretKey);
   } catch (error) {
     return error;
   }
@@ -36,7 +38,7 @@ UserSchema.statics.signInUser = async ({ email, password }) => {
   const user = await UserModel.findOne({ email });
   if (user) {
     if (await bcrypt.compare(password, user.password)) {
-      const token = user.genrateJwtToken();
+      const token = user.generateJwtToken();
       return { token, name: user.name };
     } else {
       throw new Error("Invalid login details");
