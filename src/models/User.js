@@ -25,40 +25,6 @@ UserSchema.methods.generateJwtToken = function () {
     return error;
   }
 };
-//statics
-UserSchema.statics.findEmail = async (email) => {
-  const user = await UserModel.findOne({ email });
-  if (user) {
-    throw new Error("User with this Email already exists...");
-  }
-  return false;
-};
-
-UserSchema.statics.signInUser = async ({ email, password }) => {
-  const user = await UserModel.findOne({ email });
-  if (user) {
-    if (await bcrypt.compare(password, user.password)) {
-      const token = user.generateJwtToken();
-      return { token, name: user.name };
-    } else {
-      throw new Error("Invalid login details");
-    }
-  } else {
-    throw new Error("No account found with this email");
-  }
-};
-
-UserSchema.pre("save", async function (next) {
-  try {
-    if (this.isModified("password")) {
-      this.password = await bcrypt.hash(this.password, 10);
-    } else {
-      next();
-    }
-  } catch (e) {
-    return e;
-  }
-});
 
 const UserModel = models.users || model("users", UserSchema);
 export default UserModel;
