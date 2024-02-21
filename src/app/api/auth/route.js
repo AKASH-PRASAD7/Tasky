@@ -1,7 +1,8 @@
 import DbConnecton from "@/helpers/dbConnect";
 import UserModel from "@/models/User";
 import { hashPassword } from "@/helpers/hashPass";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 /*
 SIGN UP USER
@@ -47,18 +48,13 @@ export const POST = async (req) => {
     }
 
     //Send cookie
-    const res = NextResponse.next({
-      request: {
-        headers: new Headers(req.Headers),
-      },
-    });
     const token = await newUser.generateJwtToken();
-    const oneDay = 24 * 60 * 60 * 1000;
-    NextResponse.cookies().set("token", token, {
-      maxAge: oneDay,
+    cookies().set({
+      name: "token",
+      value: token,
+      maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       path: "/",
-      sameSite: "None",
     });
 
     return NextResponse.json({
