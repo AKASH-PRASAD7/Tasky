@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import SideNav from "@/components/SideNav";
 import TaskContent from "@/components/TaskContent";
+import Analytics from "@/components/Analytics";
 
 export default function Home() {
   return (
@@ -13,6 +14,9 @@ export default function Home() {
         </div>
         <div className="col-span-8 ">
           <TaskContent />
+        </div>
+        <div>
+          <Analytics />
         </div>
       </section>
     </main>
