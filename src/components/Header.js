@@ -13,7 +13,7 @@ const Header = () => {
 
         <p
           style={clockStyle}
-          className="ml-24 text-white  font-semibold text-4xl"
+          className="ml-24 text-white tracking-widest  text-4xl"
         >
           ⌛ 9:30 AM
         </p>

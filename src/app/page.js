@@ -6,12 +6,12 @@ export default function Home() {
   return (
     <main>
       <Header />
-      <section className="grid grid-cols-5">
+      <section className="grid grid-cols-12">
         <div>
           {" "}
           <SideNav />{" "}
         </div>
-        <div className="col-span-4">
+        <div className="col-span-8 ">
           <TaskContent />
         </div>
       </section>

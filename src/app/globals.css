@@ -6,3 +6,7 @@
   font-family: "digital-clock-font";
   src: url("/digital-7.ttf");
 }
+
+body {
+  background-color: rgb(235, 228, 228);
+}
