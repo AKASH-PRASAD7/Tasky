@@ -12,7 +12,7 @@ export default function Home() {
           {" "}
           <SideNav />{" "}
         </div>
-        <div className="col-span-8 ">
+        <div className="col-span-8 min-h-screen ">
           <TaskContent />
         </div>
         <div>

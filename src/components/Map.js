@@ -1,4 +1,26 @@
+"use client";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+
 const Map = () => {
+  // const [message, setMessage] = useState("");
+  // console.log(message);
+  // useEffect(() => {
+  //   const socket = io("http://localhost:3000", {
+  //     path: "/api/socket_io",
+  //   });
+
+  //   socket.on("receive-message", (msg) => {
+  //     setMessage(msg);
+  //   });
+
+  //   return () => {
+  //     if (socket) {
+  //       socket.disconnect();
+  //     }
+  //   };
+  // }, []);
+
   let location = {
     malta:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.0951918940436!2d14.489252174513279!3d35.846669320870326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130e5a8552b04a6d%3A0xd6a6624d89d784a!2sMalta%20International%20Airport!5e0!3m2!1sen!2sin!4v1708611805757!5m2!1sen!2sin",
