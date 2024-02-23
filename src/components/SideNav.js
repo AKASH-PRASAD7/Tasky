@@ -1,8 +1,11 @@
 "use client";
 import { Plus, Home, Bell, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 const SideNav = () => {
+  const dispatch = useDispatch();
+
   const router = useRouter();
   const signOut = async () => {
     const apiUrl = `http://localhost:3000/api/auth/signout`;

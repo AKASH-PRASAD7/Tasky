@@ -52,6 +52,7 @@ export const POST = async (req) => {
     return NextResponse.json({
       success: true,
       message: "User logged in successfully",
+      user,
     });
   } catch (error) {
     return NextResponse.json({

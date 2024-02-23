@@ -26,11 +26,12 @@ export const GET = async (req) => {
     const userId = jwt.verify(cookie, config.secretKey).user;
 
     const tasks = await TaskModel.find({ userid: userId });
-
+    const user = await UserModel.find({ _id: userId });
     if (tasks.length === 0) {
       return NextResponse.json({
         success: false,
         message: "No task found Add task",
+        user: user[0].name,
       });
     }
 
@@ -38,6 +39,7 @@ export const GET = async (req) => {
       success: true,
       message: "Tasks retrieved successfully",
       tasks,
+      user: user[0].name,
     });
   } catch (error) {
     return NextResponse.json({

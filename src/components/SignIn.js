@@ -4,8 +4,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Alert from "@/components/Alert";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { addUser } from "@/Globalredux/userSlice";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,12 +34,14 @@ const SignIn = () => {
     try {
       const response = await fetch(apiUrl, requestOptions);
       const data = await response.json();
+      if (!data.success) {
+        setError({ type: data.success, msg: data.message });
+      }
 
-      setError({ type: data.success, msg: data.message });
-      //   console.log("Response Data:", data);
       if (data.success) {
         router.push("/");
       }
+      dispatch(addUser(data?.user?.name));
     } catch (err) {
       setError(err?.message);
     }
