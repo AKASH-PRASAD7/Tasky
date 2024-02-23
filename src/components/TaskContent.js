@@ -1,16 +1,64 @@
 "use client";
 import { X, SquarePen } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser, task } from "@/Globalredux/userSlice";
+import { task } from "@/Globalredux/userSlice";
+import Popup from "./PopUp";
 
-const Task = ({ title, type, description }) => {
+const Task = ({ id, title, type, description }) => {
+  const { tasks } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+
+  const add = () => {
+    setOpen((prev) => !prev);
+  };
+  const handleDelete = async (id) => {
+    const apiUrl = `http://localhost:3000/api/task/`;
+
+    const formData = {
+      taskId: id,
+    };
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    };
+
+    try {
+      await fetch(apiUrl, requestOptions);
+      const filterTask = tasks.filter((each) => each._id !== id);
+
+      dispatch(task(filterTask));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
+      <Popup
+        id={id}
+        typeOf="Update"
+        title1={title}
+        type1={type}
+        description1={description}
+        isOpen={open}
+        onClose={add}
+      />
       <section className="bg-white w-48 flex p-2 flex-col justify-around items-center">
         <p className=" w-full mb-2 flex justify-between ">
-          <SquarePen className="cursor-pointer hover:text-blue-500" />
-          <X className="cursor-pointer hover:text-red-500" />
+          <SquarePen
+            onClick={add}
+            className="cursor-pointer hover:text-blue-500"
+          />
+          <X
+            onClick={() => handleDelete(id)}
+            className="cursor-pointer hover:text-red-500"
+          />
         </p>
         <p className="px-2 text-2xl w-full place-items-end flex justify-between font-semibold ">
           {title}
@@ -24,7 +72,6 @@ const Task = ({ title, type, description }) => {
 };
 
 const TaskContent = () => {
-  const dispatch = useDispatch();
   const { tasks } = useSelector((state) => state.user);
 
   return (
@@ -38,6 +85,7 @@ const TaskContent = () => {
           <>
             {tasks?.map((each) => (
               <Task
+                id={each._id}
                 key={each._id}
                 title={each.title}
                 type={each.type}

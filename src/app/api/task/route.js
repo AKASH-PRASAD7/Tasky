@@ -103,7 +103,7 @@ export const POST = async (req) => {
     return NextResponse.json({
       success: true,
       message: "Task added",
-      user,
+      newTask,
     });
   } catch (error) {
     return NextResponse.json({
